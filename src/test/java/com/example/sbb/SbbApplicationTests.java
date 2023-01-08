@@ -1,12 +1,18 @@
 package com.example.sbb;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import com.example.sbb.answer.Answer;
+import com.example.sbb.answer.AnswerRepository;
+import com.example.sbb.question.Question;
+import com.example.sbb.question.QuestionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class SbbApplicationTests {
@@ -18,11 +24,26 @@ class SbbApplicationTests {
 	@Autowired
 	private QuestionRepository questionRepository;
 
+	@Autowired
+	private AnswerRepository answerRepository;
+
 	@Test
 	void testJpa(){
+
+		Optional<Question> oq = this.questionRepository.findById(2);
+		assertTrue(oq.isPresent());
+		Question q = oq.get();
+
+		Answer a = new Answer();
+		a.setContent("Yes, Ids are auto-generated in Spring Boot.");
+		a.setQuestion(q);
+		a.setCreateDate(LocalDateTime.now());
+		this.answerRepository.save(a);
+
+		/*
 		Question q = this.questionRepository.findBySubject("What is sbb?");
 		assertEquals(1, q.getId());
-		/*
+
 		List<Question> all = this.questionRepository.findAll();
 		assertEquals(2, all.size());
 
