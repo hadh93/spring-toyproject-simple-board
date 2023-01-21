@@ -7,6 +7,7 @@ import com.example.sbb.answer.Answer;
 import com.example.sbb.answer.AnswerRepository;
 import com.example.sbb.question.Question;
 import com.example.sbb.question.QuestionRepository;
+import com.example.sbb.question.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +27,18 @@ class SbbApplicationTests {
 
 	@Autowired
 	private AnswerRepository answerRepository;
+
+	@Autowired
+	private QuestionService questionService;
+
+	@Test
+	void generateTestCases(){
+		for (int i = 1; i<= 300; i++){
+			String subject = String.format("Test data : [%03d]", i);
+			String content = "blank";
+			this.questionService.create(subject, content);
+		}
+	}
 
 	@Test
 	void testJpa(){
