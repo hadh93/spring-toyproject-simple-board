@@ -22,9 +22,12 @@ public class SecurityConfig {
                             new AntPathRequestMatcher("/h2-console/**"))
                 .and()
                     .headers()
-                .addHeaderWriter(new XFrameOptionsHeaderWriter(
-                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN
-                ));
+                    .addHeaderWriter(new XFrameOptionsHeaderWriter(
+                        XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+                .and()
+                    .formLogin()
+                    .loginPage("/user/login")
+                    .defaultSuccessUrl("/");
         return http.build();
     }
 
