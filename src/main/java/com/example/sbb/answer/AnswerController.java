@@ -26,8 +26,8 @@ public class AnswerController {
 
     private final SiteUserService userService;
 
-    @PostMapping("/create/{id}")
     @PreAuthorize("isAuthenticated()")
+    @PostMapping("/create/{id}")
     public String createAnswer(Model model, @PathVariable Integer id,
                                @Valid AnswerForm answerForm, BindingResult bindingResult,
                                Principal principal){

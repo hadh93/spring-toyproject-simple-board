@@ -36,14 +36,17 @@ public class QuestionController {
         model.addAttribute("question", question);
         return "question_detail";
     }
-    @GetMapping("/create")
+
+
     @PreAuthorize("isAuthenticated()")
+    @GetMapping("/create")
     public String questionCreate(QuestionForm questionForm){
         return "question_form";
     }
 
-    @PostMapping("/create")
+
     @PreAuthorize("isAuthenticated()")
+    @PostMapping("/create")
     public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal){
         if(bindingResult.hasErrors()){
             return "question_form";
