@@ -18,6 +18,11 @@
                     </div>
                 </div>
                 <div class="my-3">
+                    <a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary"
+                    th:data-uri="@{|/question/vote/${question.id}|}">
+                        Like
+                        <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span>
+                    </a>
                     <a th:href="@{|/question/modify/${question.id}|}" class="btn btn-sm btn-outline-secondary"
                     sec:authorize="isAuthenticated()"
                     th:if="${question.author != null and #authentication.getPrincipal().getUsername() == question.author.username}"
@@ -49,6 +54,11 @@
                     </div>
                 </div>
                 <div class="my-3">
+                    <a href="javascript:void(0);" class="recommend btn btn-sm btn-outline-secondary"
+                    th:data-uri="@{|/answer/vote/${answer.id}|}">
+                        Like
+                        <span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voter)}"></span>
+                    </a>
                     <a th:href="@{|/answer/modify/${answer.id}|}" class="btn btn-sm btn-outline-secondary"
                     sec:authorize="isAuthenticated()"
                     th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
@@ -94,5 +104,13 @@
         });
     });
 
+    const recommend_element = document.getElementsByClassName("recommend");
+    Array.from(recommend_element).forEach(function (element) {
+       element.addEventListener('click', function() {
+           if(confirm("Are you sure you want to like this post?")){
+               location.href = this.dataset.uri;
+           }
+       });
+    });
 </script>
 </html>
